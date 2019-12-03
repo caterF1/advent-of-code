@@ -1,34 +1,50 @@
 const fs = require('fs');
+
 let dataArr = [];
 let dataStr = '';
 let intArr = [];
-let sumArr = [0];
 
-fs.readFile('input.txt', (err, data) => {
+let sum = 0;
+let netSum = 0;
+
+//read input
+fs.readFile('./input.txt', (err, data) => {
     if (err) throw err;
     dataStr = data.toString();
     dataArr = dataStr.split(/\r\n|\r|\n/g);
-
     for (let str of dataArr) {
         intArr.push(parseInt(str));
     }
 
-    let findFrequency = () => {
-        let tempSum = 0;
-        let toggle = true;
-        let i = 0;
-        while (toggle === true) {
-            for (i = 0; i < intArr.length; i++) {
-
-                tempSum += intArr[i];
-                if (sumArr.includes(tempSum)) {
-                    toggle = false;
-                    return tempSum;
-                }
-                sumArr.push(tempSum);
-            }
-            if(i = intArr.length-1) i = 0;
-        }
+    //part one
+    for (let item of intArr){
+        sum += operation(item);
     }
-    console.log('my frequency is: ' + findFrequency());
+    console.log("Sum: "+sum);
+
+    //part two
+    function unitModule(fuel){
+        let unitSum = 0;
+        let temp = operation(fuel);;
+        while(temp>0){
+            // console.log("unitSum"+ unitSum);
+            unitSum += temp;
+            temp = operation(temp);
+        }
+        return unitSum;
+    }
+
+    // console.log(unitModule(100756));
+
+    for(let item of intArr){
+        netSum += unitModule(item);
+    }
+    console.log("netSum: "+netSum)
+
 });
+
+let operation = (num) =>{
+    let result = 0;
+    result = Math.floor(num/3) -2 ;
+    return result;
+}
