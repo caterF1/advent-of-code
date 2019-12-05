@@ -17,34 +17,31 @@ fs.readFile('./input.txt', (err, data) => {
     }
 
     //part one
-    for (let item of intArr){
+    for (let item of intArr) {
         sum += operation(item);
     }
-    console.log("Sum: "+sum);
+    console.log('Sum: ' + sum);
 
     //part two
-    function unitModule(fuel){
+    function unitModule(fuel) {
         let unitSum = 0;
         let temp = operation(fuel);;
-        while(temp>0){
-            // console.log("unitSum"+ unitSum);
+        while (temp > 0) {
             unitSum += temp;
             temp = operation(temp);
         }
         return unitSum;
     }
 
-    // console.log(unitModule(100756));
-
-    for(let item of intArr){
+    for (let item of intArr) {
         netSum += unitModule(item);
     }
-    console.log("netSum: "+netSum)
+    console.log('netSum: ' + netSum);
 
 });
 
-let operation = (num) =>{
+let operation = (num) => {
     let result = 0;
-    result = Math.floor(num/3) -2 ;
+    result = Math.floor(num / 3) - 2;
     return result;
 }
